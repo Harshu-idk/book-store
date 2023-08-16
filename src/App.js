@@ -1,70 +1,37 @@
-import './App.css';
-import {BrowserRouter,Route,Routes} from 'react-router-dom';
-import {User, Home } from './User';
-import { Profile } from './components/profile/Profile';
-import { createTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from '@material-ui/core/styles';
+import React from "react";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { theme } from "./utils/theme";
+import "./assets/css/style.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { BrowserRouter } from "react-router-dom";
+import { MainNavigation } from "./components/MainNavigation";
+import loader from "../src/assets/images/loader.gif";
+import { Footer } from "./components/footer";
+import { AuthWrapper } from "./context/auth";
+import Header from "./components/header";
+import { CartWrapper } from "./context/cart";
 
-function App() {
-   //theme apply
-  const theme = createTheme({
-  palette: {
-    primary: {
-      light: "#a2d345",
-      main: "#00568e",
-      dark: "#619510",
-      contrastText: "#ffffab",
-    },
-    secondary: {
-      light: "#6e7b86",
-      main: "#f48fb1",
-      dark: "#333e48",
-      contrastText: "#ffffff",
-    },
-    text: {
-      primary: "#212121",
-      secondary: "#4c5b68",
-    },
-  },
-  typography: {
-    h1: {
-      fontSize: "36px",
-      textAlign: "center",
-      lineHeight: "1.2",
-      marginBottom: "45px",
-      fontWeight: 700,
-
-      paddingBottom: "18px",
-      position: "relative",
-      letterSpacing: "0px",
-      "&:after": {
-        position: "absolute",
-        content: " '' ",
-        left: "50%",
-        transform: "translateX(-50%)",
-        bottom: "0",
-        height: "2px",
-        width: "165px",
-        
-      }
-    }
-  }
-})
-  const userName ='I am Harsh and I am';
+const App = () => {
   return (
     <BrowserRouter>
-    <ThemeProvider theme={theme}>
-    <div className="App">
-     <Routes>
-      <Route path='/' element={<Home/>}/>
-      <Route path='/user' element={<User name={userName} age={21} />}/>
-      <Route path='/Profile' element={<Profile/>}/>
-     </Routes>
-    </div>
-   
-    </ThemeProvider>
+      <AuthWrapper>
+        <CartWrapper>
+          <ThemeProvider theme={theme}>
+            <div className="loader-wrapper">
+              <img src={loader} alt="loader" />
+            </div>
+            <Header />
+            <main>
+              <MainNavigation />
+            </main>
+            <Footer />
+            <ToastContainer />
+          </ThemeProvider>
+        </CartWrapper>
+      </AuthWrapper>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
